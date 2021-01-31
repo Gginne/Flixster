@@ -39,34 +39,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie movie = movies.get(position);
         holder.bind(movie);
-        holder.item.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
-                Movie mov = movies.get(position);
-                View view=LayoutInflater.from(context).inflate(R.layout.movie_dialog,null);
+                //pass the 'context' here
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setView(R.layout.movie_dialog);
 
-                //Set Alert Dialog Poster
-                ImageView d_poster = (ImageView)view.findViewById(R.id.d_poster);
-                Glide.with(context).load(mov.getBackdropPath()).into(d_poster);
-                //Set Alert Dialog Title
-                TextView d_title = (TextView)view.findViewById(R.id.d_title);
-                d_title.setText(mov.getTitle());
-                //Set Alert Dialog Overview
-                TextView d_overview = (TextView)view.findViewById(R.id.d_overview);
-                d_title.setText(mov.getOverview());
-
-                //Build Alert Dialog
-                builder.setView(view);
-
-                builder.setNegativeButton("back", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                        dialog.cancel();
                     }
                 });
-                final AlertDialog alertDialog=builder.create();
-                alertDialog.show();
+
+
+                AlertDialog dialog = alertDialog.create();
+                dialog.show();
             }
 
         });
@@ -104,7 +93,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             }
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.poster_placeholder)
                     .into(poster);
         }
     }
