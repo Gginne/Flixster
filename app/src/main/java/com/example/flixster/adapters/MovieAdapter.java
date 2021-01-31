@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +39,40 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie movie = movies.get(position);
         holder.bind(movie);
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                Movie mov = movies.get(position);
+                View view=LayoutInflater.from(context).inflate(R.layout.movie_dialog,null);
+
+                //Set Alert Dialog Poster
+                ImageView d_poster = (ImageView)view.findViewById(R.id.d_poster);
+                Glide.with(context).load(mov.getBackdropPath()).into(d_poster);
+                //Set Alert Dialog Title
+                TextView d_title = (TextView)view.findViewById(R.id.d_title);
+                d_title.setText(mov.getTitle());
+                //Set Alert Dialog Overview
+                TextView d_overview = (TextView)view.findViewById(R.id.d_overview);
+                d_title.setText(mov.getOverview());
+
+                //Build Alert Dialog
+                builder.setView(view);
+
+                builder.setNegativeButton("back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog alertDialog=builder.create();
+                alertDialog.show();
+            }
+
+        });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -44,11 +80,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+        ConstraintLayout item;
         TextView title;
         TextView overview;
         ImageView poster;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
+            item = itemView.findViewById(R.id.movieItem);
             title = itemView.findViewById(R.id.movieTitle);
             overview = itemView.findViewById(R.id.movieOverview);
             poster = itemView.findViewById(R.id.moviePoster);
@@ -66,6 +104,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             }
             Glide.with(context)
                     .load(imageUrl)
+                    .placeholder(R.drawable.poster_placeholder)
                     .into(poster);
         }
     }
