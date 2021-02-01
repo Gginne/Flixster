@@ -43,8 +43,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 //pass the 'context' here
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View view = inflater.inflate(R.layout.movie_dialog,null);
+                //Set Dialog Components
+                ImageView d_poster = (ImageView) view.findViewById(R.id.dialogPoster);
+                Glide.with(context).load(movie.getBackdropPath()).into(d_poster);
+                TextView d_title = (TextView) view.findViewById(R.id.dialogTitle) ;
+                d_title.setText(movie.getTitle());
+                TextView d_overview = (TextView) view.findViewById(R.id.dialogOverview) ;
+                d_overview.setText(movie.getOverview());
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                alertDialog.setView(R.layout.movie_dialog);
 
                 alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
@@ -53,8 +62,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     }
                 });
 
-
+                //Set Custom Dialog Layout
+                alertDialog.setView(view);
                 AlertDialog dialog = alertDialog.create();
+
+
+
+
                 dialog.show();
             }
 
@@ -69,13 +83,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ConstraintLayout item;
         TextView title;
         TextView overview;
         ImageView poster;
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            item = itemView.findViewById(R.id.movieItem);
             title = itemView.findViewById(R.id.movieTitle);
             overview = itemView.findViewById(R.id.movieOverview);
             poster = itemView.findViewById(R.id.moviePoster);
