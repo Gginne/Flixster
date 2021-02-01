@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,8 +51,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 Glide.with(context).load(movie.getBackdropPath()).into(d_poster);
                 TextView d_title = (TextView) view.findViewById(R.id.dialogTitle) ;
                 d_title.setText(movie.getTitle());
-                TextView d_overview = (TextView) view.findViewById(R.id.dialogOverview) ;
+                TextView d_overview = (TextView) view.findViewById(R.id.dialogOverview);
                 d_overview.setText(movie.getOverview());
+                RatingBar d_rating = (RatingBar) view.findViewById(R.id.dialogRating);
+                d_rating.setRating(movie.getRating());
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
@@ -86,11 +89,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView title;
         TextView overview;
         ImageView poster;
+
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             title = itemView.findViewById(R.id.movieTitle);
             overview = itemView.findViewById(R.id.movieOverview);
             poster = itemView.findViewById(R.id.moviePoster);
+
         }
 
         public void bind(Movie movie) {
