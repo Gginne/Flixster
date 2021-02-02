@@ -21,6 +21,8 @@ import com.example.flixster.models.Movie;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     Context context;
     List<Movie> movies;
@@ -58,19 +60,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
-                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
 
                 //Set Custom Dialog Layout
                 alertDialog.setView(view);
                 AlertDialog dialog = alertDialog.create();
-
-
-
 
                 dialog.show();
             }

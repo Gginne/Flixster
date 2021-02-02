@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp">
 
     <ImageView
         android:id="@+id/moviePoster"
@@ -18,7 +19,7 @@
         android:id="@+id/movieTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/moviePoster"
@@ -28,11 +29,12 @@
         android:id="@+id/movieOverview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="5"
         android:text="This is where movie overview goes"
+        android:textColor="#c1c1c1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/moviePoster"
         app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
