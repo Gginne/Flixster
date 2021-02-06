@@ -2,6 +2,7 @@ package com.example.flixster.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.DetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
@@ -46,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 //pass the 'context' here
-                LayoutInflater inflater = LayoutInflater.from(context);
+                /*LayoutInflater inflater = LayoutInflater.from(context);
                 View view = inflater.inflate(R.layout.movie_dialog,null);
                 //Set Dialog Components
                 ImageView d_poster = (ImageView) view.findViewById(R.id.dialogPoster);
@@ -58,14 +60,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 RatingBar d_rating = (RatingBar) view.findViewById(R.id.dialogRating);
                 d_rating.setRating(movie.getRating());
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-
-
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                 //Set Custom Dialog Layout
                 alertDialog.setView(view);
                 AlertDialog dialog = alertDialog.create();
 
                 dialog.show();
+                */
+                Intent i = new Intent(context, DetailsActivity.class);
+                //Pass Data To Actvity
+                i.putExtra("title", movie.getTitle());
+                i.putExtra("overview", movie.getOverview());
+                i.putExtra("rating", movie.getRating());
+                context.startActivity(i);
             }
 
         });
