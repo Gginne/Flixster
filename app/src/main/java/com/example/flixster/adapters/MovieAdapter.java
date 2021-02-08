@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 */
                 Intent i = new Intent(context, DetailsActivity.class);
                 //Pass Data To Actvity
-                i.putExtra("title", movie.getTitle());
-                i.putExtra("overview", movie.getOverview());
-                i.putExtra("rating", movie.getRating());
+                i.putExtra("movie", (Parcelable) movie);
                 context.startActivity(i);
             }
 
