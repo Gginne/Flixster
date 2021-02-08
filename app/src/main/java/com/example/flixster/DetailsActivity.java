@@ -47,20 +47,43 @@ public class DetailsActivity extends YouTubeBaseActivity {
         d_rating = (RatingBar) findViewById(R.id.detailRating);
         d_rating.setRating(movie.getRating());
         //Get Video Data
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(String.format(VIDEOS_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Headers headers, JSON json) {
+                try {
+                    JSONArray results = json.jsonObject.getJSONArray("results");
+                    if(results.length() == 0){
+                        return;
+                    }
+                    String youtubeKey = results.getJSONObject(0).getString("key");
+                    initializeYoutube(youtubeKey);
+                } catch (JSONException e){
+                    Log.e("DetailsActivity", "Failed to parse JSON", e);
+                }
+            }
 
+            @Override
+            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                Log.e("DetailsActivity", "Failed to make API call", throwable);
+            }
+        });
+
+    }
+
+    private void initializeYoutube(String youtubeKey) {
         //Set YouTube player
         ytPlayerView = (YouTubePlayerView) findViewById(R.id.player);
-        ytPlayerView.initialize(YOUTUBE_API_KEY,
-            new YouTubePlayer.OnInitializedListener() {
-                @Override
-                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                    youTubePlayer.cueVideo("5xVh-7ywKpE");
-                }
+        ytPlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                youTubePlayer.cueVideo(youtubeKey);
+            }
 
-                @Override
-                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
-                }
+            }
 
         });
     }
