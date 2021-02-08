@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.example.flixster.DetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -70,7 +73,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 */
                 Intent i = new Intent(context, DetailsActivity.class);
                 //Pass Data To Actvity
-                i.putExtra("movie", (Parcelable) movie);
+                i.putExtra("movie", Parcels.wrap(movie));
                 context.startActivity(i);
             }
 

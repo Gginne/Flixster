@@ -11,6 +11,11 @@
     android:gravity="top"
     android:orientation="vertical">
 
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="225dp" />
+
     <TextView
         android:id="@+id/detailTitle"
         android:layout_width="match_parent"

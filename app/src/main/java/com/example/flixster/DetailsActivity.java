@@ -1,6 +1,7 @@
 package com.example.flixster;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -8,26 +9,60 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.flixster.models.Movie;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
-public class DetailsActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.parceler.Parcels;
+
+import okhttp3.Headers;
+
+public class DetailsActivity extends YouTubeBaseActivity {
+
+    private static final String YOUTUBE_API_KEY = "AIzaSyCCV_arBwT36acrzIskdCasoIowrHxo4RM";
+    public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
     TextView d_title;
     TextView d_overview;
     RatingBar d_rating;
+    YouTubePlayerView ytPlayerView;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        String title = getIntent().getStringExtra("title");
-        String overview = getIntent().getStringExtra("overview");
-        float rating = getIntent().getFloatExtra("rating", (float)0.0);
+        //Import movie
+        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
         //Set Details Components
         d_title = (TextView) findViewById(R.id.detailTitle) ;
-        d_title.setText(title);
+        d_title.setText(movie.getTitle());
         d_overview = (TextView) findViewById(R.id.detailOverview);
-        d_overview.setText(overview);
+        d_overview.setText(movie.getOverview());
         d_rating = (RatingBar) findViewById(R.id.detailRating);
-        d_rating.setRating(rating);
+        d_rating.setRating(movie.getRating());
+        //Get Video Data
+
+        //Set YouTube player
+        ytPlayerView = (YouTubePlayerView) findViewById(R.id.player);
+        ytPlayerView.initialize(YOUTUBE_API_KEY,
+            new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                    youTubePlayer.cueVideo("5xVh-7ywKpE");
+                }
+
+                @Override
+                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                }
+
+        });
     }
 
 }
