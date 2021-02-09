@@ -13,6 +13,7 @@ public class Movie {
 
     int movieId;
     String posterPath;
+    String releaseDate;
     String backdropPath;
     String title;
     String overview;
@@ -23,6 +24,7 @@ public class Movie {
     public Movie(JSONObject jsonObject) throws JSONException {
         movieId  = jsonObject.getInt("id");
         posterPath = jsonObject.getString("poster_path");
+        releaseDate = jsonObject.getString("release_date");
         backdropPath = jsonObject.getString("backdrop_path");
         title = jsonObject.getString("title");
         rating = jsonObject.getDouble("vote_average");
@@ -37,6 +39,10 @@ public class Movie {
 
     public String getBackdropPath() {
         return String.format("https://image.tmdb.org/t/p/w780/%s",backdropPath);
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public String getTitle() {

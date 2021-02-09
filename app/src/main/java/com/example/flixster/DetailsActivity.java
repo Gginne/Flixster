@@ -30,6 +30,7 @@ public class DetailsActivity extends YouTubeBaseActivity {
 
     TextView d_title;
     TextView d_overview;
+    TextView d_date;
     RatingBar d_rating;
     YouTubePlayerView ytPlayerView;
     @Override
@@ -44,6 +45,8 @@ public class DetailsActivity extends YouTubeBaseActivity {
         d_title.setText(movie.getTitle());
         d_overview = (TextView) findViewById(R.id.detailOverview);
         d_overview.setText(movie.getOverview());
+        d_date = (TextView) findViewById(R.id.detailDate);
+        d_date.setText("Release Date: "+movie.getReleaseDate());
         d_rating = (RatingBar) findViewById(R.id.detailRating);
         d_rating.setRating(movie.getRating());
         //Get Video Data
