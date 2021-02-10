@@ -1,5 +1,6 @@
 package com.example.flixster.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.flixster.DetailsActivity;
+import com.example.flixster.MainActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
@@ -51,30 +54,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //pass the 'context' here
-                /*LayoutInflater inflater = LayoutInflater.from(context);
-                View view = inflater.inflate(R.layout.movie_dialog,null);
-                //Set Dialog Components
-                ImageView d_poster = (ImageView) view.findViewById(R.id.dialogPoster);
-                Glide.with(context).load(movie.getBackdropPath()).into(d_poster);
-                TextView d_title = (TextView) view.findViewById(R.id.dialogTitle) ;
-                d_title.setText(movie.getTitle());
-                TextView d_overview = (TextView) view.findViewById(R.id.dialogOverview);
-                d_overview.setText(movie.getOverview());
-                RatingBar d_rating = (RatingBar) view.findViewById(R.id.dialogRating);
-                d_rating.setRating(movie.getRating());
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
-                //Set Custom Dialog Layout
-                alertDialog.setView(view);
-                AlertDialog dialog = alertDialog.create();
-
-                dialog.show();
-                */
                 Intent i = new Intent(context, DetailsActivity.class);
                 //Pass Data To Actvity
                 i.putExtra("movie", Parcels.wrap(movie));
-                context.startActivity(i);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, (View)holder.poster,"profile");
+                context.startActivity(i, options.toBundle());
             }
 
         });

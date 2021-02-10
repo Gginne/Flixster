@@ -12,6 +12,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:contentDescription="MOVIE_POSTER"
+        android:transitionName="profile"
         tools:layout_editor_absoluteY="-1dp"
         tools:srcCompat="@tools:sample/avatars" />
 
