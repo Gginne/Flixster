@@ -95,9 +95,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             } else {
                 imageUrl = movie.getPosterPath();
             }
+            int radius = 20; // corner radius, higher value = more rounded
+            int margin = 10; // crop margin, set to 0 for corners with no crop
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.placeholder_poster)
+                    .transform(new RoundedCornersTransformation(radius, margin))
                     .into(poster);
         }
     }
